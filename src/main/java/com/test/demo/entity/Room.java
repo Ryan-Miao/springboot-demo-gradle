@@ -1,10 +1,16 @@
 package com.test.demo.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Size;
+
 /**
  * Created by Ryan on 2017/11/16/0016.
  */
 public class Room {
     private Integer roomId;
+    @NotEmpty
+    @Size(min = 3, max = 20, message = "The size of room name should between 3 and 20")
     private String roomName;
     private String comment;
 
