@@ -3,6 +3,7 @@ package com.test.demo.entity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * Created by Ryan on 2017/11/16/0016.
@@ -13,6 +14,15 @@ public class Room {
     @Size(min = 3, max = 20, message = "The size of room name should between 3 and 20")
     private String roomName;
     private String comment;
+    private List<Integer> arr;
+
+    public List<Integer> getArr() {
+        return arr;
+    }
+
+    public void setArr(List<Integer> arr) {
+        this.arr = arr;
+    }
 
     public Integer getRoomId() {
         return roomId;
@@ -44,6 +54,7 @@ public class Room {
                 "roomId=" + roomId +
                 ", roomName='" + roomName + '\'' +
                 ", comment='" + comment + '\'' +
+                ", arr=" + arr +
                 '}';
     }
 }
