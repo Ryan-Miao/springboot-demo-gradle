@@ -16,6 +16,16 @@ public class Room {
     private String comment;
     private List<Integer> arr;
 
+    public Room() {
+    }
+
+    public Room(Integer roomId, String roomName, String comment, List<Integer> arr) {
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.comment = comment;
+        this.arr = arr;
+    }
+
     public List<Integer> getArr() {
         return arr;
     }
