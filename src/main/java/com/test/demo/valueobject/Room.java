@@ -1,4 +1,4 @@
-package com.test.demo.entity;
+package com.test.demo.valueobject;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
