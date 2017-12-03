@@ -1,6 +1,6 @@
 package com.test.demo.controller;
 
-import com.test.demo.valueobject.Room;
+import com.test.demo.domain.valueobject.Room;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;

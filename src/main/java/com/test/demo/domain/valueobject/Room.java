@@ -1,4 +1,4 @@
-package com.test.demo.valueobject;
+package com.test.demo.domain.valueobject;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -60,7 +60,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
+        return "RoomTable{" +
                 "roomId=" + roomId +
                 ", roomName='" + roomName + '\'' +
                 ", comment='" + comment + '\'' +
