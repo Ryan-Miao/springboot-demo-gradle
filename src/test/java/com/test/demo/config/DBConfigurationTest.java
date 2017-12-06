@@ -3,20 +3,20 @@ package com.test.demo.config;
 import com.mysql.cj.api.jdbc.Statement;
 import com.test.demo.Application;
 import com.test.demo.domain.entity.RoomTable;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,7 @@ public class DBConfigurationTest {
     @Transactional
     @Test
     public void testInsert() {
-        final RoomTable room = new RoomTable("Doule Bed", "no", new Date(), new Date());
+        final RoomTable room = new RoomTable("总统套房", "", new Date(), new Date());
 
         String sql = "INSERT INTO room(`name`, `comment`, `create_date`, `update_date`) VALUES (?,?,?,?)";
         int rs = jdbcTemplate.update(sql,
@@ -68,6 +68,41 @@ public class DBConfigurationTest {
 
         final List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT * FROM room");
         System.out.println(maps);
+    }
+
+
+    @Test
+    public void testSelectOne(){
+        String sql = "select `id`,`name`,`comment`,`create_date`,`update_date` from room WHERE id=?";
+        RoomTable roomTable = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> new RoomTable(rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("comment"),
+                rs.getTime("create_date"),
+                rs.getTime("update_date")), 3);
+        System.out.println(roomTable);
+        Assert.assertTrue(3== roomTable.getId());
+        Assert.assertNotNull(roomTable.getCreateDate());
+    }
+
+    @Test
+    public void testSelectList(){
+        String sql = "select `id`,`name`,`comment`,`create_date`,`update_date` from room WHERE id>? LIMIT 0,2";
+        List<RoomTable> roomTableList = jdbcTemplate.query(sql, (rs, rowNum) -> new RoomTable(rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("comment"),
+                rs.getTime("create_date"),
+                rs.getTime("update_date")), 1);
+
+        System.out.println(roomTableList);
+        Assert.assertEquals(2, roomTableList.size());
+    }
+
+
+    @Transactional
+    @Test
+    public void testDelete(){
+        //insert first
+
     }
 
 
