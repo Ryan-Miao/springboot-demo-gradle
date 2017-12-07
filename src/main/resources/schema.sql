@@ -24,4 +24,5 @@ INSERT INTO `room` VALUES ('2', 'Double Bed', 'no', '2017-12-06 00:00:00', '2017
 INSERT INTO `room` VALUES ('3', 'Big Bed', '', '2017-12-06 00:00:00', '2017-12-06 10:00:00');
 
 
-
+-- for delete --
+alter table room add column `active` tinyint default 0 not null;
