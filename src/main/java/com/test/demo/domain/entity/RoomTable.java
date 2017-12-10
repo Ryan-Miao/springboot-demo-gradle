@@ -1,11 +1,17 @@
 package com.test.demo.domain.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
  * Created by Ryan Miao on 12/2/17.
  */
+@Entity(name = "room")
 public class RoomTable {
+    @Id
+    @GeneratedValue
     private Integer id;
     private String name;
     private String comment;

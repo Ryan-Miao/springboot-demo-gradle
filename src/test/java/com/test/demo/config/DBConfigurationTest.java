@@ -5,6 +5,7 @@ import com.test.demo.Application;
 import com.test.demo.domain.entity.RoomTable;
 import org.assertj.core.util.Lists;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Import({Application.class, DBConfiguration.class})
-//打开以下注解则启用真实数据库测试，否则启用h2
-//@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
+@Ignore
 public class DBConfigurationTest {
 
     @Autowired

@@ -1,3 +1,5 @@
+-- 备份数据库，重命名为db-schema.sql, 防止加载的时候执行。
+
 create database if not exists springboot_demo charset utf8 collate utf8_general_ci;
 use springboot_demo;
 
