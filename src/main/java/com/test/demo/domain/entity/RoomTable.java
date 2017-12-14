@@ -1,21 +1,31 @@
 package com.test.demo.domain.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Ryan Miao on 12/2/17.
  */
 @Entity(name = "room")
-public class RoomTable {
+public class RoomTable implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;
+
+    @Column(nullable = false, length = 200)
     private String name;
+
+    @Column
     private String comment;
+
+    @Column(updatable = false)
     private Date createDate;
+
+    @Column
     private Date updateDate;
 
     public RoomTable() {

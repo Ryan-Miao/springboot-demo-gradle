@@ -40,6 +40,12 @@ dependencies {
 
     compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
 
+    compile group: 'com.google.guava', name: 'guava', version: '23.5-jre'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+
+
+
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.196'
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
