@@ -56,9 +56,8 @@ public class RoomService implements IRoomService {
 
     @Override
     public BaseResponse<Integer> saveRoom(RoomRequest roomRequest) {
-        final Supplier<Integer> result = () -> roomRepository.save(new RoomTable(roomRequest.getName(), roomRequest.getComment(), new Date(), new Date())).getId();
         return handle(
-                result,
+                () -> roomRepository.save(new RoomTable(roomRequest.getName(), roomRequest.getComment(), new Date(), new Date())).getId(),
                 SystemEvent.SAVE_ONE_ROOM_FAILED,
                 ImmutableMap.of("roomRequest", roomRequest));
 
@@ -80,6 +79,13 @@ public class RoomService implements IRoomService {
         return handle(result,
                 SystemEvent.UPDATE_ONE_ROOM_FAILED,
                 ImmutableMap.of("roomRequest", roomRequest));
+    }
+
+    @Override
+    public BaseResponse<Boolean> delete(Integer id) {
+        return handle(() -> {roomRepository.delete(id); return true;},
+                SystemEvent.SAVE_ONE_ROOM_FAILED,
+                ImmutableMap.of("id", id));
     }
 
 

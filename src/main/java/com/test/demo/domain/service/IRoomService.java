@@ -15,4 +15,6 @@ public interface IRoomService {
     BaseResponse<List<RoomTable>> findList();
 
     BaseResponse<Boolean> updateRoom(RoomRequest roomRequest);
+
+    BaseResponse<Boolean> delete(Integer id);
 }

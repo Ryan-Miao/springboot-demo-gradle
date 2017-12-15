@@ -43,6 +43,14 @@ public class RoomController {
         return ResponseMapper.map(one);
     }
 
+    @GetMapping("/{id}")
+    @ApiOperation("delete by id.")
+    public ResponseEntity<IApiResponse<Boolean>> deleteById(@PathVariable Integer id) {
+        BaseResponse<Boolean> one = roomService.delete(id);
+
+        return ResponseMapper.map(one);
+    }
+
     @GetMapping("/")
     @ApiOperation("Get all the rooms.")
     public ResponseEntity<IApiResponse<List<RoomTable>>> findList() {

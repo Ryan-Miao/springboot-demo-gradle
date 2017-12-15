@@ -10,6 +10,7 @@ public enum  SystemEvent {
     SAVE_ONE_ROOM_FAILED(10003, "Save a room failed."),
     UPDATE_ONE_ROOM_FAILED(10004, "Update a room failed."),
     FIND_ALL_ROOMS_FAILED(10005, "Find all rooms failed."),
+    DELETE_ONE_ROOM_FAILED(10006, "Delete a room failed."),
     ;
 
 
