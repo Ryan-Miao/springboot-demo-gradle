@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +44,7 @@ public class RoomController {
         return ResponseMapper.map(one);
     }
 
-    @GetMapping("/{id}")
+    @DeleteMapping("/{id}")
     @ApiOperation("delete by id.")
     public ResponseEntity<IApiResponse<Boolean>> deleteById(@PathVariable Integer id) {
         BaseResponse<Boolean> one = roomService.delete(id);
