@@ -15,10 +15,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 @Service
-public class RoomService implements IRoomService{
+public class RoomService implements IRoomService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(RoomService.class);
 
@@ -31,10 +33,9 @@ public class RoomService implements IRoomService{
 
     @Override
     public BaseResponse<RoomTable> findOne(Integer id) {
-
         try {
             final RoomTable one = roomRepository.findOne(id);
-            if (one == null){
+            if (one == null) {
                 ErrorMsg errorMsg = new ErrorMsg(SystemEvent.FIND_ONE_ROOM_NOT_EXIST.getId(), SystemEvent.FIND_ONE_ROOM_NOT_EXIST.getDetail());
                 return new BaseResponse<>(errorMsg);
             }
@@ -55,20 +56,49 @@ public class RoomService implements IRoomService{
 
     @Override
     public BaseResponse<Integer> saveRoom(RoomRequest roomRequest) {
+        final Supplier<Integer> result = () -> roomRepository.save(new RoomTable(roomRequest.getName(), roomRequest.getComment(), new Date(), new Date())).getId();
+        return handle(
+                result,
+                SystemEvent.SAVE_ONE_ROOM_FAILED,
+                ImmutableMap.of("roomRequest", roomRequest));
 
+    }
+
+    @Override
+    public BaseResponse<List<RoomTable>> findList() {
+        return handle(roomRepository::findAll,
+                SystemEvent.FIND_ALL_ROOMS_FAILED);
+    }
+
+    @Override
+    public BaseResponse<Boolean> updateRoom(RoomRequest roomRequest) {
+        final Supplier<Boolean> result = () -> {
+            roomRepository.save(new RoomTable(roomRequest.getId(), roomRequest.getName(), roomRequest.getComment(), new Date()));
+            return true;
+        };
+
+        return handle(result,
+                SystemEvent.UPDATE_ONE_ROOM_FAILED,
+                ImmutableMap.of("roomRequest", roomRequest));
+    }
+
+
+    private <T> BaseResponse<T> handle(Supplier<T> result, SystemEvent event) {
+        return handle(result, event, null);
+    }
+
+    private <T> BaseResponse<T> handle(Supplier<T> result, SystemEvent event, Map<String, Object> logData) {
         try {
-            final RoomTable save = roomRepository.save(new RoomTable(roomRequest.getName(), roomRequest.getComment(), new Date(), new Date()));
-            return new BaseResponse<>(save.getId());
+            T t = result.get();
+            return new BaseResponse<>(t);
         } catch (Exception e) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("event", SystemEvent.SAVE_ONE_ROOM_FAILED);
+            final Map<String, Object> map = new HashMap<>();
+            map.put("event", event);
             map.put("errorMsg", e.getMessage());
-            map.put("data", roomRequest);
-
+            map.putAll(logData);
             LOGGER.error(map.toString(), e);
 
-            return new BaseResponse<>(new ErrorMsg(SystemEvent.SAVE_ONE_ROOM_FAILED.getId(), e.getMessage()));
+            return new BaseResponse<>(new ErrorMsg(event.getId(), e.getMessage()));
         }
-
     }
 }

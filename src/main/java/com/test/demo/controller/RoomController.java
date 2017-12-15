@@ -13,9 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by Ryan Miao on 12/14/17.
@@ -40,10 +43,26 @@ public class RoomController {
         return ResponseMapper.map(one);
     }
 
+    @GetMapping("/")
+    @ApiOperation("Get all the rooms.")
+    public ResponseEntity<IApiResponse<List<RoomTable>>> findList() {
+        BaseResponse<List<RoomTable>> list = roomService.findList();
+
+        return ResponseMapper.map(list);
+    }
+
     @PostMapping("/")
-    @ApiOperation("save room.")
+    @ApiOperation("Save a room.")
     public ResponseEntity<IApiResponse<Integer>> saveRoom(@RequestBody RoomRequest roomRequest){
         BaseResponse<Integer> id = roomService.saveRoom(roomRequest);
+
+        return ResponseMapper.map(id);
+    }
+
+    @PutMapping("/")
+    @ApiOperation("Update a room.")
+    public ResponseEntity<IApiResponse<Boolean>> updateRoom(@RequestBody RoomRequest roomRequest){
+        BaseResponse<Boolean> id = roomService.updateRoom(roomRequest);
 
         return ResponseMapper.map(id);
     }

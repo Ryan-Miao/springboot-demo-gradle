@@ -38,6 +38,14 @@ public class RoomTable implements Serializable {
         this.updateDate = updateDate;
     }
 
+
+    public RoomTable(Integer id, String name, String comment, Date updateDate) {
+        this.id = id;
+        this.name = name;
+        this.comment = comment;
+        this.updateDate = updateDate;
+    }
+
     public RoomTable(Integer id, String name, String comment, Date createDate, Date updateDate) {
         this.id = id;
         this.name = name;
