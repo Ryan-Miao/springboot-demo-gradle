@@ -31,7 +31,7 @@ alter table room add column `active` tinyint default 0 not null;
 
 
 
-DROP TABLE if EXISTS  `user`;
+-- user
 CREATE TABLE `user`(
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `username` VARCHAR(8) NOT NULL UNIQUE,
